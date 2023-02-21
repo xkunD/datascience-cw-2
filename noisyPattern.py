@@ -29,35 +29,43 @@ class noisyPattern:
 
     def __getMajority(self, i, j):
         pixels = self.image[max(i-1, 0):min(i+2,self.image.shape[0]), max(j-1, 0):min(j+2,self.image.shape[1])]
-        # Flatten the pixels to simplify the counting
+
         pixels_flat = pixels.reshape(-1)
-        # Count the number of black and white pixels
+
         black_count = white_count = 0
         black_count = np.count_nonzero(pixels_flat == 0)
-        white_count = np.count_nonzero(pixels_flat == 255)
-        # Return the majority color, or None if there is a tie
+        white_count = np.count_nonzero(pixels_flat == 255) - 1
+
         if black_count > white_count:
             return 0
         elif black_count < white_count:
             return 255
         else:
-            print("this is equal:", i, j)
             return self.image[i,j]
-            
         
 
     def removeNoise(self):
+        change = True
+        while change == True:
+            change = False
+            for i in range(self.image.shape[0]):
+                for j in range (self.image.shape[1]):
+                    if self.image[i, j] == 255:
+                        if self.image[i, j] != self.__getMajority(i, j):
+                            self.image[i, j] = self.__getMajority(i, j)
+                            change = True
+        plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
+    
+    def __getAverage(self, i, j):
+        pixels = self.image[max(i-1, 0):min(i+2,self.image.shape[0]+1), max(j-1, 0):min(j+2,self.image.shape[1])+1]
+        pixels_flat = pixels.reshape(-1)
+        average = sum(pixels_flat)/len(pixels_flat)
+        return average
+
+    def filter1(self):
         for i in range(self.image.shape[0]):
             for j in range (self.image.shape[1]):
-                if self.image[i, j] == 255:
-                    self.image[i, j] = self.__getMajority(i, j)
-        plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
-        #your code here
-        #if there is a white dot, replace its value by the value # of the majority of neighbouring pixels
-        #save the resulting image in file noise_removed.png
-        
-    def filter1(self):
-        print("good")
+                self.image[i, j] = self.__getAverage(i,j)
         #your code here
         #replace the value of every pixel by the average of the values #of its neighbouring pixels
         #save the resulting image in file pattern_filter1.png      
