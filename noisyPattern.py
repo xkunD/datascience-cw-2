@@ -66,15 +66,14 @@ class noisyPattern:
         for i in range(self.image.shape[0]):
             for j in range (self.image.shape[1]):
                 self.image[i, j] = self.__getAverage(i,j)
-        #your code here
-        #replace the value of every pixel by the average of the values #of its neighbouring pixels
-        #save the resulting image in file pattern_filter1.png      
+        plt.imsave('pattern_filter1.png', self.image, cmap=plt.cm.gray)
 
 def main():
     noisyp = noisyPattern()
     noisyp.setLines()
     noisyp.addNoise()
     noisyp.removeNoise()
+    noisyp.filter1()
     
 if __name__ == "__main__":
     main() 
