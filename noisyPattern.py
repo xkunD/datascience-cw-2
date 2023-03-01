@@ -53,14 +53,17 @@ class noisyPattern:
         plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
 
     def invert(self):
-        pass
+        for i in range(self.image.shape[0]):
+            for j in range (int(self.image.shape[1]/2)):
+                self.image[i, j] = self.image[self.image.shape[0] - i - 1, j]
+        plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
 
 def main():
     noisyp = noisyPattern()
     noisyp.setFigure()
     noisyp.addNoise()
     noisyp.removeNoise()
-    # noisyp.filter1()
+    noisyp.invert()
     
 if __name__ == "__main__":
     main() 
