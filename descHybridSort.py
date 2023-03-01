@@ -17,25 +17,29 @@ class sortArray:
     def descHybridSort(self):
         data = self.numbers
         for i in range(len(data)-1):            #will get it sorted if n-1 items are sorted
-            swapped = False                    # will stop when no swap can be found by bubble
+            gotSwap = False                    # will stop when no swap was found by bubble
             maxIndex = i
             for j in range(i, len(data)-i-1):   #start from i and check j with j+1
                 if data[j+1] > data[maxIndex]: 
                     maxIndex = j                #keep tracking max index
+                # print("outer loop:", i, "compare between", data[j], data[j+1],", and data[max] now is", data[maxIndex])
                 if data[j] < data[j+1]: 
-                    swapped = True
+                    gotSwap = True
                     data[j], data[j+1] = data[j+1], data[j]
-            if not swapped:                 # if need to change to above?
-                break
+            if not gotSwap:                 # shall I do if not gotSwap && i != len-2
+                # print("break as it is done!") 
+                break                      # can I use break?
             if maxIndex != i:
                 data[i], data[maxIndex] = data[maxIndex], data[i]   # selection sort
+        print("End of outer loop: ", self.numbers)
 
 def main():
-    arraysort = sortArray(10)
-    print(arraysort)
-    arraysort.descHybridSort()
-    print(arraysort)
-
+    print("Original array")
+    A=sortArray(10)
+    print(A)
+    A.descHybridSort()
+    print("Sorted array")
+    print(A)
 
 if __name__ == "__main__":
     main() 
