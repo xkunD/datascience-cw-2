@@ -27,14 +27,14 @@ class noisyPattern:
     def __getMajority(self, i, j):
         pixels = self.image[max(i-1, 0):min(i+2,self.image.shape[0]), max(j-1, 0):min(j+2,self.image.shape[1])]
 
-        pixels_flat = pixels.reshape(-1)
+        pixelsFlat = pixels.reshape(-1)
 
-        black_count = np.count_nonzero(pixels_flat == 0)
-        white_count = np.count_nonzero(pixels_flat == 255) - 1
+        blackNum = np.count_nonzero(pixelsFlat == 0)
+        whiteNum = np.count_nonzero(pixelsFlat == 255) - 1
 
-        if black_count > white_count:
+        if blackNum > whiteNum:
             return 0
-        elif black_count < white_count:
+        elif blackNum < whiteNum:
             return 255
         else:
             return self.image[i,j]
@@ -46,24 +46,26 @@ class noisyPattern:
             change = False
             for i in range(self.image.shape[0]):
                 for j in range (self.image.shape[1]):
-                    if self.image[i, j] == 255:
+                    if self.image[i, j] == 255:     
                         if self.image[i, j] != self.__getMajority(i, j):
                             self.image[i, j] = self.__getMajority(i, j)
                             change = True
         plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
 
     def invert(self):
-        for i in range(self.image.shape[0]):
-            for j in range (int(self.image.shape[1]/2)):
-                self.image[i, j] = self.image[self.image.shape[0] - i - 1, j]
-        plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
+        for i in range(int(self.image.shape[0]/2)):
+            for j in range (self.image.shape[1]):
+                self.image[i, j], self.image[self.image.shape[0] - i - 1, j] = self.image[self.image.shape[0] - i - 1, j], self.image[i, j]
+        plt.imsave('noise_inverted.png', self.image, cmap=plt.cm.gray)
 
 def main():
     noisyp = noisyPattern()
     noisyp.setFigure()
     noisyp.addNoise()
     noisyp.removeNoise()
+    print("done noise")
     noisyp.invert()
+    print("done invert")
     
 if __name__ == "__main__":
     main() 
