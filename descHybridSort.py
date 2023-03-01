@@ -16,23 +16,23 @@ class sortArray:
             self.size=size
 
     def descHybridSort(self):
-        data = self.numbers
-        gotSwap = True   
+        swapped = True   
         i = 0                     
-        while gotSwap:            #will get it sorted if n-1 items are sorted
-            gotSwap = False                    
-            maxIndex = len(data)-i-1
-            # print(data)
-            for j in range(i, len(data)-i-1):   #start from i and check j with j+1
-                # print("outer loop:", i, "compare between", data[j], data[j+1],", and data[max] now is", data[maxIndex])
-                if data[j] < data[j+1]: 
-                    gotSwap = True
-                    data[j], data[j+1] = data[j+1], data[j]
-                if data[j] > data[maxIndex]:
+        while swapped and i < int(len(self.numbers)/2):        # only need to do n/2(ground) times (example case with 3 elems)
+            swapped = False                    
+            maxIndex = len(self.numbers) - i - 1
+            for j in range(i, len(self.numbers)-i-1):   #start from i and check j with j+1
+                if self.numbers[j] < self.numbers[j+1]: 
+                    swapped = True
+                    self.numbers[j], self.numbers[j+1] = self.numbers[j+1], self.numbers[j]
+                if self.numbers[j] > self.numbers[maxIndex]:
                     maxIndex = j 
-            data[i], data[maxIndex] = data[maxIndex], data[i]   # selection sort
-            i += 1
+            # selection sort
+            self.numbers[i], self.numbers[maxIndex] = self.numbers[maxIndex], self.numbers[i]
         print("End of outer loop: ", self.numbers)
+
+    # debugging : issue with 2 elems fixed with limit on while loop
+
 
 def main():
     print("Original array")
