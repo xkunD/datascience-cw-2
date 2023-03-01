@@ -31,43 +31,34 @@ class noisyPattern:
         blackNum = np.count_nonzero(neighbours == 0)
         whiteNum = np.count_nonzero(neighbours == 255) - 1
 
-        if blackNum > whiteNum:
+        if blackNum > whiteNum:         # if black more than white
             return 0
-        elif blackNum < whiteNum:
+        else:                           # if black less or equal to white
             return 255
-        else:
-            return self.image[i,j]
-    
+
 
     def removeNoise(self):
-        change = True
-        while change == True:
-            change = False
+        changed = True
+        while changed:
+            changed = False
             for i in range(self.image.shape[0]):
                 for j in range (self.image.shape[1]):
                     if self.image[i, j] == 255:     
                         if self.image[i, j] != self.__getMajority(i, j):
                             self.image[i, j] = 255 - self.image[i, j]
-                            change = True
+                            changed = True
         plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
 
     def invert(self):
-        for i in range(int(self.image.shape[0]/2)):
-            for j in range (self.image.shape[1]):
-                self.image[i, j], self.image[self.image.shape[0] - i - 1, j] = self.image[self.image.shape[0] - i - 1, j], self.image[i, j]
+        self.image = self.image[::-1]
         plt.imsave('inverted.png', self.image, cmap=plt.cm.gray)
 
 def main():
     noisyp = noisyPattern()
     noisyp.setFigure()
     noisyp.addNoise()
-
-
     noisyp.removeNoise()
-
-
     noisyp.invert()
-    print("done invert")
     
 if __name__ == "__main__":
     main() 
