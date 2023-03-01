@@ -25,12 +25,10 @@ class noisyPattern:
         plt.imsave('noisy_pattern.png', self.image, cmap=plt.cm.gray)
 
     def __getMajority(self, i, j):
-        pixels = self.image[max(i-1, 0):min(i+2,self.image.shape[0]), max(j-1, 0):min(j+2,self.image.shape[1])]
+        neighbours = self.image[max(i-1, 0) : min(i+2, self.image.shape[0]), max(j-1, 0) : min(j+2, self.image.shape[1])].reshape(-1)
 
-        pixelsFlat = pixels.reshape(-1)
-
-        blackNum = np.count_nonzero(pixelsFlat == 0)
-        whiteNum = np.count_nonzero(pixelsFlat == 255) - 1
+        blackNum = np.count_nonzero(neighbours == 0)
+        whiteNum = np.count_nonzero(neighbours == 255) - 1
 
         if blackNum > whiteNum:
             return 0

@@ -25,10 +25,12 @@ class sortArray:
                 if self.numbers[j] < self.numbers[j+1]: 
                     swapped = True
                     self.numbers[j], self.numbers[j+1] = self.numbers[j+1], self.numbers[j]
+                # check maxIndex
                 if self.numbers[j] > self.numbers[maxIndex]:
                     maxIndex = j 
             # selection sort
             self.numbers[i], self.numbers[maxIndex] = self.numbers[maxIndex], self.numbers[i]
+            i += 1
         print("End of outer loop: ", self.numbers)
 
     # debugging : issue with 2 elems fixed with limit on while loop
@@ -36,7 +38,7 @@ class sortArray:
 
 def main():
     print("Original array")
-    A=sortArray(1)
+    A=sortArray(8)
     print(A)
     A.descHybridSort()
     print("Sorted array")
