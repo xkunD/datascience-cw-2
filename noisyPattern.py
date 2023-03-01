@@ -25,7 +25,8 @@ class noisyPattern:
         plt.imsave('noisy_pattern.png', self.image, cmap=plt.cm.gray)
 
     def __getMajority(self, i, j):
-        neighbours = self.image[max(i-1, 0) : min(i+2, self.image.shape[0]), max(j-1, 0) : min(j+2, self.image.shape[1])].reshape(-1)
+        neighbours = self.image[max(i-1, 0) : min(i+2, self.image.shape[0]), \
+                                max(j-1, 0) : min(j+2, self.image.shape[1])].reshape(-1)
 
         blackNum = np.count_nonzero(neighbours == 0)
         whiteNum = np.count_nonzero(neighbours == 255) - 1
@@ -46,7 +47,7 @@ class noisyPattern:
                 for j in range (self.image.shape[1]):
                     if self.image[i, j] == 255:     
                         if self.image[i, j] != self.__getMajority(i, j):
-                            self.image[i, j] = self.__getMajority(i, j)
+                            self.image[i, j] = 255 - self.image[i, j]
                             change = True
         plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
 
@@ -54,14 +55,17 @@ class noisyPattern:
         for i in range(int(self.image.shape[0]/2)):
             for j in range (self.image.shape[1]):
                 self.image[i, j], self.image[self.image.shape[0] - i - 1, j] = self.image[self.image.shape[0] - i - 1, j], self.image[i, j]
-        plt.imsave('noise_inverted.png', self.image, cmap=plt.cm.gray)
+        plt.imsave('inverted.png', self.image, cmap=plt.cm.gray)
 
 def main():
     noisyp = noisyPattern()
     noisyp.setFigure()
     noisyp.addNoise()
+
+
     noisyp.removeNoise()
-    print("done noise")
+
+
     noisyp.invert()
     print("done invert")
     
