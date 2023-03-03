@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_csv(athlete_events.csv)
+data = pd.read_csv("athlete_events.csv")
 def filtering(df):
     """
     Filters the dataframe based on user input and returns the filtered dataframe and its length.
