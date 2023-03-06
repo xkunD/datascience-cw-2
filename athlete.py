@@ -13,7 +13,11 @@ def menu():
         print("Too many options")
         sys.exit()
     elif not selections.isdigit():
-        print("")
+        print("Can only accept integers!")
+    else:
+        for num in selections:
+            
+            
 
 
 
