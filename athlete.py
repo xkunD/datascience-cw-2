@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import sys
 
 data = pd.read_csv("athlete_events.csv")
 
@@ -10,8 +11,9 @@ def menu():
     selections = str(input()).strip()
     if len(selections) > 5:
         print("Too many options")
-        exit
-    elif 
+        sys.exit()
+    elif not selections.isdigit():
+        print("")
 
 
 
