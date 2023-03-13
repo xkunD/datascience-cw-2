@@ -33,11 +33,36 @@ def menu():
     return choices
 
 
-def filtering():
-    pass
+def filtering(original_df):
+    df = original_df
+    choices = menu()
+    try:
+        for choice in menu:
+            if choice == 1:
+                sex = input("Enter F for female, M for male:")
+                temp =df[(df['Sex'] == sex)]
+            elif choice == 2:
+                age = input("Enter age in years:")
+                temp =df[(df['Age'] == int(age))]
+            elif choice == 3:
+                team = input("Enter the name of team:")
+                temp =df[(df['Team'] == team)]
+            elif choice == 4:
+                year = input("Enter the year:")
+                temp =df[(df['Year'] == int(year))]
+            elif choice == 5:
+                sport = input("Enter the name of sport:")
+                temp =df[(df['Sport'] == sport)]
+    except ValueError:
+        df = []
+    return len(df), df
 
 def main():
     print("choice are:", menu())
+    df = pd.read_csv("athlete_events.csv")  #read csv file and store it as dataframe
+    records, new_df =filtering(df)
+    print("\n=======================================")
+    print(records ,"records")
 
 if __name__ == "__main__":
     main()
