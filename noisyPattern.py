@@ -24,35 +24,37 @@ class noisyPattern:
                     self.image[i,j]=255
         plt.imsave('noisy_pattern.png', self.image, cmap=plt.cm.gray)
 
+
     def __getMajority(self, i, j):
+        # get 3*3 pixels around i,j (with corner cases considered)
         neighbours = self.image[max(i-1, 0) : min(i+2, self.image.shape[0]), \
-                                max(j-1, 0) : min(j+2, self.image.shape[1])].reshape(-1)
+                                max(j-1, 0) : min(j+2, self.image.shape[1])]
+        
+        flat_neighbours = neighbours.reshape(-1)            # flatten the 3*3 array
+        blackNum = np.count_nonzero(flat_neighbours == 0)   # count black pixels
 
-        blackNum = np.count_nonzero(neighbours == 0)
-        whiteNum = np.count_nonzero(neighbours == 255) - 1
-
-        if blackNum > whiteNum:         # if black more than white
-            return 0
-        else:                           # if black less or equal to white
-            return 255
+        return 0 if blackNum > 4 else 255           # return black when blacknum > whitenum
 
 
     def removeNoise(self):
-        changed = True
-        while changed:
+        changed = True 
+        while changed:                  # keep looping if there're changes
             changed = False
             for i in range(self.image.shape[0]):
                 for j in range (self.image.shape[1]):
+                    # check every white pixels in the image
                     if self.image[i, j] == 255:     
-                        if self.image[i, j] != self.__getMajority(i, j):
-                            self.image[i, j] = 255 - self.image[i, j]
-                            changed = True
+                        if self.__getMajority(i, j) == 0:   # if majority is black 
+                            self.image[i, j] = 0 
+                            changed = True              # changes are made
         plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
 
+    
     def invert(self):
-        self.image = self.image[::-1]
+        self.image = self.image[::-1]   # select each rows in reverse order
         plt.imsave('inverted.png', self.image, cmap=plt.cm.gray)
 
+    # looping method:
     # def invert(self):
     #     for i in range(int(self.image.shape[0]/2)):
     #         for j in range (self.image.shape[1]):
