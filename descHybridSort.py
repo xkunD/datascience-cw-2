@@ -18,15 +18,16 @@ class sortArray:
     def descHybridSort(self):
         swapped = True   
         i = 0                     
-        while swapped and i < int(len(self.numbers)/2):        # only need to do n/2(ground) times (example case with 3 elems)
+        while swapped and i < int(len(self.numbers)/2):        
+            # outer loop only need to do n/2(ground) times (example case with 3 elems)
             swapped = False                    
             maxIndex = len(self.numbers) - i - 1
-            for j in range(i, len(self.numbers)-i-1):   #start from i and check j with j+1
-                if self.numbers[j] < self.numbers[j+1]: 
+            for j in range(i, len(self.numbers) - i - 1):   
+                # inner loop start from i and check j with j+1
+                if self.numbers[j] < self.numbers[j+1]:         # bubble sort
                     swapped = True
                     self.numbers[j], self.numbers[j+1] = self.numbers[j+1], self.numbers[j]
-                # check maxIndex
-                if self.numbers[j] > self.numbers[maxIndex]:
+                if self.numbers[j] > self.numbers[maxIndex]:    # keep maxIndex
                     maxIndex = j 
             # selection sort
             self.numbers[i], self.numbers[maxIndex] = self.numbers[maxIndex], self.numbers[i]
