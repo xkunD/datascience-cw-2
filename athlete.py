@@ -31,7 +31,7 @@ def menu():
 
 
 def filtering(original_df):
-    df = original_df
+    df = original_df 
     choices = menu()
     try:
         for choice in choices:
@@ -51,8 +51,8 @@ def filtering(original_df):
                 sport = input("Enter the name of sport: ").capitalize()
                 temp = df[(df['Sport'] == sport)]
             df = temp
-    except ValueError:
-        df = []
+    except ValueError:          # if errors in filter function running (maybe remove it?)
+        return 0, df
     return len(df), df
 
 
