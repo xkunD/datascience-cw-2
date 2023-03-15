@@ -36,19 +36,19 @@ def filtering(original_df):
     try:
         for choice in choices:
             if choice == 1:
-                sex = input("Enter F for female, M for male: ")
+                sex = input("Enter F for female, M for male: ").upper()
                 temp = df[(df['Sex'] == sex)]
             elif choice == 2:
                 age = input("Enter age in years: ")
                 temp = df[(df['Age'] == int(age))]
             elif choice == 3:
-                team = input("Enter the name of team: ")
+                team = input("Enter the name of team: ").capitalize()
                 temp = df[(df['Team'] == team)]
             elif choice == 4:
                 year = input("Enter the year: ")
                 temp = df[(df['Year'] == int(year))]
             elif choice == 5:
-                sport = input("Enter the name of sport: ")
+                sport = input("Enter the name of sport: ").capitalize()
                 temp = df[(df['Sport'] == sport)]
             df = temp
     except ValueError:
@@ -68,7 +68,7 @@ def plotting(n, df):
 
     elif n >= 100:              
         # plot histogram
-        plt.hist(df['Weight'], 12)
+        plt.hist(df['Weight'], bins = 12)
         plt.xlabel('Weight of the Athletes (kg)') 
         plt.ylabel('Number of records') 
         plt.title('Histogram of the weight of selected Athletes', fontsize = '16')
