@@ -29,7 +29,7 @@ class sortArray:
                     swapped = True
                     self.numbers[j], self.numbers[j+1] = self.numbers[j+1], self.numbers[j]
                                     
-                if self.numbers[j] > self.numbers[maxIndex]:    # keep maxIndex
+                if self.numbers[j] > self.numbers[maxIndex]:    # check and update maxIndex
                     maxIndex = j 
             
             self.numbers[i], self.numbers[maxIndex] = self.numbers[maxIndex], self.numbers[i]   # selection sort

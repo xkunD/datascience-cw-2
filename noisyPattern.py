@@ -38,20 +38,22 @@ class noisyPattern:
 
     def removeNoise(self):
         changed = True 
+
         while changed:                              # keep looping if there're changes
             changed = False
             for i in range(self.image.shape[0]):
                 for j in range (self.image.shape[1]):
-                    if self.image[i, j] == 255:             # check every white pixels
-                        if self.__getMajority(i, j) == 0:   # if majority is black 
-                            self.image[i, j] = 0 
-                            changed = True                  # changes are made
-        plt.imsave('noise_removed.png', self.image, cmap=plt.cm.gray)
+                    # check every white pixel's neighbors 
+                    if self.image[i, j] == 255 and self.__getMajority(i, j) == 0:
+                        self.image[i, j] = 0 
+                        changed = True                  # changes are made
+        
+        plt.imsave('noise_removed.png', self.image, cmap = plt.cm.gray)
 
     
     def invert(self):
         self.image = self.image[::-1]               # select each row in reversed order
-        plt.imsave('inverted.png', self.image, cmap=plt.cm.gray)
+        plt.imsave('inverted.png', self.image, cmap = plt.cm.gray)
 
     # looping method:
     # def invert(self):
